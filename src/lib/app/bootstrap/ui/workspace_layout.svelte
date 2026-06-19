@@ -356,7 +356,7 @@
       payload: Record<string, unknown>,
     ) => tauri_invoke<Result>(command, payload);
 
-    return await invoke_openaleph_search("search", {});
+    return await invoke_openaleph_search("openaleph_search", {query: search_query});
   }
 </script>
 

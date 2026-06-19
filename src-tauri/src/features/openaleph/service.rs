@@ -18,7 +18,7 @@ struct ApiKey {
 }
 
 #[tauri::command]
-pub async fn search() -> Vec<String> {
+pub async fn openaleph_search(query: String) -> Vec<String> {
     println!("Hello from openaleph search");
     // TODO use the otterly setting manager instead. This is a temporary workaround.
     let path = PathBuf::from(".env");
@@ -31,8 +31,8 @@ pub async fn search() -> Vec<String> {
         .unwrap();
     let res = client
         .get("https://search.openaleph.org/api/2/search")
-        // TODO: parameterize!
-        .query(&[("q", "Friedrich Merz"), ("limit", "10")])
+        // TODO: sanitize!
+        .query(&[("q", &query), ("limit", &"10".to_string())])
         .header(AUTHORIZATION, api_key.api_key)
         .send()
         .await;
